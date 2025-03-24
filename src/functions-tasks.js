@@ -124,7 +124,7 @@ function memoize(func) {
   let cache;
   let hasCache = false;
 
-  return function () {
+  return function result() {
     if (!hasCache) {
       cache = func();
       hasCache = true;
@@ -190,7 +190,7 @@ function retry(func, attempts) {
  *
  */
 function logger(func, logFunc) {
-  return function (...args) {
+  return function result1(...args) {
     const argStr = args.map((arg) => JSON.stringify(arg)).join(',');
     logFunc(`${func.name}(${argStr}) starts`);
     const result = func(...args);
@@ -213,7 +213,7 @@ function logger(func, logFunc) {
  *   partialUsingArguments(fn, 'a','b','c','d')() => 'abcd'
  */
 function partialUsingArguments(fn, ...args1) {
-  return function (...args2) {
+  return function result(...args2) {
     return fn(...args1, ...args2);
   };
 }
@@ -238,7 +238,7 @@ function partialUsingArguments(fn, ...args1) {
 function getIdGeneratorFunction(startFrom) {
   let currentId = startFrom;
 
-  return function () {
+  return function result() {
     const id = currentId; // Store the current value
     currentId += 1; // Increment separately
     return id; // Return the original value
